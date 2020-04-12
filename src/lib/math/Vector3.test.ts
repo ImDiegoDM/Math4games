@@ -52,3 +52,20 @@ test("should not be able to change zero value",()=>{
   expect(Vector3.zero.GetY()).toBe(0)
   expect(Vector3.zero.GetZ()).toBe(0)
 })
+
+test("should be abble to calculate length correctly",()=>{
+  const v = new Vector3(2,2,1)
+
+  expect(v.Length()).toBe(3)
+  expect(v.LengthSquared()).toBe(9)
+})
+
+test("should normalize correctly",()=>{
+  const v = new Vector3(2,2,1)
+
+  v.Normalize()
+
+  expect(v.GetX()).toBe(2/3)
+  expect(v.GetY()).toBe(2/3)
+  expect(v.GetZ()).toBe(1/3)
+})
