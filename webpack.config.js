@@ -13,7 +13,7 @@ module.exports = {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: [
-          ".src/**/*.test.ts",
+          __dirname+"/src/**/*.test.ts",
           /node_modules/
         ],
       },
