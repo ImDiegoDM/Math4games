@@ -1,8 +1,9 @@
-import { Program } from "./Program";
 import { GLObject } from "./GLObject";
+import { Render } from "./Render";
 
 export interface Shader{
+  name:string;
   content:string;
   type:number;
-  LoadAttributes?(program:Program,obj:GLObject):void;
+  LoadAttributes?(obj:GLObject):void;
 }

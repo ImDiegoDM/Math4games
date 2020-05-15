@@ -1,6 +1,7 @@
 import { Shader } from "../../lib/Matin/Shader"
 
 const frag:Shader = {
+  name:'redFrag',
   content:`
     void main() {
       gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);

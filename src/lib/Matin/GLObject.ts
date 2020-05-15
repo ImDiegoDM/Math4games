@@ -1,27 +1,39 @@
 import { Shader } from "./Shader";
-import { Program } from "./Program";
+import { Render } from "./Render";
 
 export interface GLObject{
   vertex: number[];
   vertexCount: number;
-  fragShader: string;
-  vertexShader: string;
-  Draw:(program:Program)=>void;
+  fragShader: Shader;
+  vertexShader: Shader;
+  Draw:()=>void;
+  Init:()=>void;
+}
+
+interface GLObject2DOpts{
+  vertex: number[];
+  fragShader: Shader;
+  vertexShader: Shader;
 }
 
 export class GLObject2D implements GLObject{
   vertex: number[]
   vertexCount = 2
-  fragShader: string;
-  vertexShader: string;
+  fragShader: Shader;
+  vertexShader: Shader;
 
-  constructor(vertex: number[],fragShader: string, vertexShader: string){
-    this.vertex = vertex;
-    this.fragShader = fragShader;
-    this.vertexShader = vertexShader;
+  constructor(opts:GLObject2DOpts){
+    this.vertex = opts.vertex;
+    this.fragShader = opts.fragShader;
+    this.vertexShader = opts.vertexShader;
   }
 
-  Draw(program:Program){
-    program.DrawGLObject2D(this)
+  Init(){
+    Render.RegisterShader(this.fragShader)
+    Render.RegisterShader(this.vertexShader)
+  }
+
+  Draw(){
+    Render.DrawTriangleStrip(this.vertex.length/2)
   }
 }

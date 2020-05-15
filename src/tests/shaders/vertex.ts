@@ -1,8 +1,9 @@
 import { Shader } from "../../lib/Matin/Shader"
-import { Program } from "../../lib/Matin/Program"
 import { GLObject } from "../../lib/Matin/GLObject"
+import { Render } from "../../lib/Matin/Render"
 
 const vert:Shader = {
+  name:'baseVert',
   content:`
     attribute vec4 aVertexPosition;
 
@@ -14,8 +15,8 @@ const vert:Shader = {
     }
   `,
   type: WebGL2RenderingContext.VERTEX_SHADER,
-  LoadAttributes(program:Program,obj:GLObject){
-    program.setArrayAttribute('aVertexPosition',2,WebGL2RenderingContext.FLOAT,obj.vertex)
+  LoadAttributes(obj:GLObject){
+    Render.SetArrayAttribute('aVertexPosition',2,WebGL2RenderingContext.FLOAT,obj.vertex)
   }
 }
 

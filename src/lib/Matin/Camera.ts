@@ -12,7 +12,7 @@ export class Camera{
     this.zFar = 100.0
   }
 
-  public getProjectionMatrix(){
+  public GetProjectionMatrix(){
     const projectionMatrix = mat4.create();
 
     mat4.perspective(projectionMatrix,
@@ -23,5 +23,13 @@ export class Camera{
     );
 
     return projectionMatrix
+  }
+
+  public GetModelViewMatrix(){
+    const modelViewMatrix = mat4.create();
+
+    mat4.translate(modelViewMatrix, modelViewMatrix, [-0.0, 0.0, -6.0]);
+
+    return modelViewMatrix
   }
 }

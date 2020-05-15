@@ -1,6 +1,8 @@
-import { Program } from "../lib/Matin/Program";
 import { GLObject2D } from "../lib/Matin/GLObject";
-import shaders from "./shaders/index";
+import frag from "./shaders/frag";
+import vert from "./shaders/vertex";
+import redFrag from "./shaders/redFrag"
+import { Render } from "../lib/Matin/Render";
 
 export function run(){
   const c = document.querySelector<HTMLCanvasElement>("#glCanvas")
@@ -21,14 +23,17 @@ export function run(){
      0, -2.0,
   ];
 
-  const obj = new GLObject2D(positions,'baseFrag','baseVertex')
-  const obj1 = new GLObject2D(positions1,'redFrag','baseVertex')
+  const obj = new GLObject2D({
+    vertex:positions,
+    vertexShader: vert,
+    fragShader: frag
+  })
+  const obj1 = new GLObject2D({
+    vertex:positions1,
+    vertexShader: vert,
+    fragShader: redFrag
+  })
 
-  try{
-    const p = new Program(gl,[obj,obj1],shaders)
-    p.Draw()
-  }catch (log){
-    console.log(log)
-  }
-
+  Render.Create(gl,[obj,obj1])
+  Render.Draw()
 }
