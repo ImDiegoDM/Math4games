@@ -25,7 +25,7 @@ test("should subtract correctly",()=>{
 test("should multiply correctly",()=>{
   let a = new Vector3(2,3,5)
 
-  a = a.Multiply(2)
+  a = a.ScalarMultiply(2)
 
   expect(a.GetX()).toBe(4)
   expect(a.GetY()).toBe(6)

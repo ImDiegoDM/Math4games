@@ -55,12 +55,20 @@ class Vector3 {
     return new Vector3(this.x-value.x,this.y-value.y,this.z-value.z)
   }
 
-  public Multiply(value:number):Vector3 {
+  public ScalarMultiply(value:number):Vector3 {
     return new Vector3(this.x*value,this.y*value,this.z*value)
   }
 
   public Divide(value:number):Vector3 {
     return new Vector3(this.x/value,this.y/value,this.z/value)
+  }
+
+  public Cross(value:Vector3){
+    return new Vector3(
+      this.y*value.z - value.y*this.z,
+      this.z*value.x - value.z*this.x,
+      this.x*value.y - value.x*this.y
+    )
   }
 
   public Length():number {
@@ -78,9 +86,8 @@ class Vector3 {
     }
 
     const recip = IvInverseSqrt(lengthsqrd)
-    const normalized = this.Multiply(recip)
 
-    return normalized
+    return this.ScalarMultiply(recip)
   }
 
   public Dot(value:Vector3):number{
@@ -97,6 +104,10 @@ class Vector3 {
     const z = point1.z - point2.z
 
     return (x*x+y*y+z*z)
+  }
+
+  public Print(name = "vector"){
+    console.log(`${name}(${this.x},${this.y},${this.z})`)
   }
 }
 

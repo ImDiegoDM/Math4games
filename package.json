@@ -23,6 +23,8 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "@types/gl-matrix": "^2.4.5",
+    "gl-matrix": "^3.3.0",
     "lodash": "^4.17.15"
   }
 }

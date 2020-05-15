@@ -1,9 +1,8 @@
 import { Program } from "./Program";
+import { GLObject } from "./GLObject";
 
 export interface Shader{
   content:string;
   type:number;
-  HasAttributes():boolean;
-  LoadAttributes?(program:Program):void;
-  Draw?(program:Program):void;
+  LoadAttributes?(program:Program,obj:GLObject):void;
 }

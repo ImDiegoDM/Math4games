@@ -1,59 +1,22 @@
+import { Shader } from "../../lib/Matin/Shader"
 import { Program } from "../../lib/Matin/Program"
+import { GLObject } from "../../lib/Matin/GLObject"
 
-export default {
-  position:[
-    [
-      0, 0,
-      0, 0.5,
-      0.7, 0,
-      0.7,0.5
-    ],
-    [
-      -0.2, -0.2,
-      -0.2, -0.7,
-      -0.9, -0.2,
-      -0.9,-0.7
-    ]
-  ],
-  positionAttributeLocation:undefined,
+const vert:Shader = {
   content:`
-  // an attribute will receive data from a buffer
-  attribute vec4 a_position;
+    attribute vec4 aVertexPosition;
 
-  // all shaders have a main function
-  void main() {
+    uniform mat4 uModelViewMatrix;
+    uniform mat4 uProjectionMatrix;
 
-    // gl_Position is a special variable a vertex shader
-    // is responsible for setting
-    gl_Position = a_position;
-  }
-`,
-  type: WebGL2RenderingContext.VERTEX_SHADER,
-  HasAttributes(){
-    return true
-  },
-  LoadAttributes(program:Program){
-    this.positionAttributeLocation = program.GetAttributeLocation("a_position")
-
-    const pBuffer = program.CreateBuffer()
-
-    program.BindArrayBuffer(pBuffer)
-
-    program.EnableVertexAttribArray(this.positionAttributeLocation)
-
-    program.VertexAttribPointer(
-      this.positionAttributeLocation,
-      2,
-      WebGL2RenderingContext.FLOAT,
-      false,
-      0,
-      0
-    )
-  },
-  Draw(program:Program){
-    for (const p of this.position) {
-      program.BufferArrayData(new Float32Array(p),WebGL2RenderingContext.STATIC_DRAW)
-      program.DrawTriangleStrips(4)
+    void main() {
+      gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
     }
+  `,
+  type: WebGL2RenderingContext.VERTEX_SHADER,
+  LoadAttributes(program:Program,obj:GLObject){
+    program.setArrayAttribute('aVertexPosition',2,WebGL2RenderingContext.FLOAT,obj.vertex)
   }
 }
+
+export default vert

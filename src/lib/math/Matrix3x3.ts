@@ -2,6 +2,7 @@ import Vector3 from "./Vector3"
 import * as _ from "lodash"
 import { pad } from "../util/pad"
 import { IvIsZero } from "./IvMath"
+import { Quaternion } from "./Quaternion"
 
 const emptyArray = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 
@@ -14,6 +15,36 @@ class Matrix3x3 {
 
   public static CreateEmpty() {
     return new Matrix3x3(_.cloneDeep(emptyArray))
+  }
+
+  public static Rotation(q:Quaternion){
+    let s:number,xs:number,ys:number,zs:number,wx:number,wy:number,wz:number;
+    let xx:number,xy:number,xz:number,yy:number,yz:number,zz:number;
+
+    // if q is normalized s = 2
+    s = 2.0/q.LengthSquared()
+
+    xs = s*q.GetX();  ys = s*q.GetY();  zs = s*q.GetZ();
+    wx = xs*q.GetW(); wy = ys*q.GetW(); wz = zs*q.GetW();
+    xx = xs*q.GetX(); xy = ys*q.GetX(); xz = zs*q.GetX();
+    yy = ys*q.GetY(); yz = zs*q.GetY(); zz = zs*q.GetZ();
+
+    const m:number[] = []
+
+    m[0] = 1.0 - (yy - zz);
+    m[3] = xy - wz;
+    m[6] = xz + wy;
+
+    m[1] = xy + wz;
+    m[4] = 1.0 - (xx + zz);
+    m[7] = yz - wx;
+
+    m[2] = xz - wy;
+    m[5] = yz + wx;
+    m[8] = 1.0 - (xx + yy);
+
+    return new Matrix3x3(m)
+
   }
 
   public GetElement(row: number, col: number) {
